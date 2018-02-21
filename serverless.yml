@@ -1,0 +1,50 @@
+service: comms-lambda-logs-shipper
+
+plugins:
+  - serverless-pseudo-parameters
+
+custom:
+
+  defaultStage: UAT
+
+  UAT:
+    environment:
+      ENVIRONMENT: UAT
+      LOGZIO_URL: https://listener.logz.io:8071
+      LOGZIO_TOKEN: ${env:LOGZIO_TOKEN}
+
+  PRD:
+    environment:
+      ENVIRONMENT: PRD
+      LOGZIO_URL: https://listener.logz.io:8071
+      LOGZIO_TOKEN: ${env:LOGZIO_TOKEN}
+
+provider:
+  name: aws
+  runtime: python2.7
+  region: eu-west-1
+  stage: ${opt:stage}
+  memorySize: 256
+  timeout: 150
+  environment: ${self:custom.${self:provider.stage}.environment}
+  versionFunctions: false
+  cfLogs: true
+
+resources:
+  Resources:
+    ShipperLogGroup:
+      Properties:
+        RetentionInDays: "7"
+
+functions:
+  shipper:
+    handler: handler.lambda_handler
+    environment:
+      LOGZIO_LOG_TYPE: lambda
+      LOGZIO_LOG_FORMAT: json
+    events:
+      - cloudwatchLog: '/aws/lambda/comms-log-sender-${self:custom.${self:provider.stage}.environment.ENVIRONMENT}'
+    tags:
+      Service: ${self:service}
+      Environment: ${self:custom.${self:provider.stage}.environment.ENVIRONMENT}
+

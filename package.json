@@ -1,0 +1,12 @@
+{
+  "name": "comms-lambda-logs-shipper",
+  "devDependencies": {
+    "serverless": "^1.23.0",
+    "serverless-pseudo-parameters": "^1.1.6"
+  },
+  "scripts": {
+    "deploy-uat": "serverless --stage UAT deploy -v",
+    "deploy-prd": "serverless --stage PRD deploy -v"
+  },
+  "dependencies": {}
+}
