@@ -43,7 +43,7 @@ functions:
       LOGZIO_LOG_TYPE: lambda
       LOGZIO_LOG_FORMAT: json
     events:
-      - cloudwatchLog: '/aws/lambda/comms-log-sender-${self:custom.${self:provider.stage}.environment.ENVIRONMENT}'
+      - cloudwatchLog: '/aws/lambda/comms-audit-indexer-${self:custom.${self:provider.stage}.environment.ENVIRONMENT}'
     tags:
       Service: ${self:service}
       Environment: ${self:custom.${self:provider.stage}.environment.ENVIRONMENT}
