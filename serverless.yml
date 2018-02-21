@@ -1,4 +1,4 @@
-service: comms-lambda-logs-shipper
+service: logzio-logs-shipper
 
 plugins:
   - serverless-pseudo-parameters
