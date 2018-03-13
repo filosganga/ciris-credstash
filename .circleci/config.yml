@@ -76,7 +76,15 @@ workflows:
     - deploy-uat:
         requires:
         - build
+        filters:
+          branches:
+            only: master
+
 
     - deploy-prd:
         requires:
         - deploy-uat
+        filters:
+          branches:
+            only: master
+
