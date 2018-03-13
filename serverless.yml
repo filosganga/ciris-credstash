@@ -44,6 +44,7 @@ functions:
       LOGZIO_LOG_FORMAT: json
     events:
       - cloudwatchLog: '/aws/lambda/comms-audit-indexer-index-${self:custom.${self:provider.stage}.environment.ENVIRONMENT}'
+      - cloudwatchLog: '/aws/lambda/api-${self:custom.${self:provider.stage}.environment.ENVIRONMENT}-api'
     tags:
       Service: ${self:service}
       Environment: ${self:custom.${self:provider.stage}.environment.ENVIRONMENT}
